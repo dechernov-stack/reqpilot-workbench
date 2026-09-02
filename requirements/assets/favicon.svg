@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ReqPilot Workbench">
+  <rect width="64" height="64" rx="12" fill="#083344"/>
+  <path d="M16 45V18h18c9 0 14 5 14 13 0 6-3 10-9 12l10 13H38L29 44h-4v12H16zm9-10h8c4 0 6-1 6-4s-2-4-6-4h-8z" fill="#ecfeff"/>
+</svg>

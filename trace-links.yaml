@@ -1,0 +1,145 @@
+schema_version: 1
+
+# Canonical cross-tool links. Architecture identity is UUID-based; snapshots are
+# display-only and are refreshed explicitly. The bundled target index is a clearly
+# labelled fixture until project.yaml selects a real Capella model.
+links:
+  - id: TL-0001
+    requirement:
+      uid: STK-001
+      mid: mid_req_stk_001
+    architecture:
+      model_id: pump-station
+      uuid: 10000000-0000-4000-8000-000000000110
+      type: OperationalCapability
+      name_snapshot: Monitor Pump Station
+    relation: satisfied_by
+    rationale: Возможность обеспечивает оператору наблюдение за состоянием станции.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0002
+    requirement:
+      uid: STK-002
+      mid: mid_req_stk_002
+    architecture:
+      model_id: pump-station
+      uuid: 10000000-0000-4000-8000-000000000111
+      type: OperationalCapability
+      name_snapshot: Respond to Pressure Alarm
+    relation: satisfied_by
+    rationale: Возможность описывает полный ответ оператора на превышение давления.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0003
+    requirement:
+      uid: SYS-001
+      mid: mid_req_sys_001
+    architecture:
+      model_id: pump-station
+      uuid: 20000000-0000-4000-8000-000000000216
+      type: SystemFunction
+      name_snapshot: Publish HMI State
+    relation: satisfied_by
+    rationale: Функция публикует состояние насоса оператору в пределах бюджета задержки.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0004
+    requirement:
+      uid: SYS-002
+      mid: mid_req_sys_002
+    architecture:
+      model_id: pump-station
+      uuid: 20000000-0000-4000-8000-000000000213
+      type: SystemFunction
+      name_snapshot: Evaluate Pressure Threshold
+    relation: satisfied_by
+    rationale: Функция сравнивает валидированное давление с аварийным порогом.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0005
+    requirement:
+      uid: SYS-003
+      mid: mid_req_sys_003
+    architecture:
+      model_id: pump-station
+      uuid: 20000000-0000-4000-8000-000000000214
+      type: SystemFunction
+      name_snapshot: Manage Alarm Lifecycle
+    relation: satisfied_by
+    rationale: Функция фиксирует аварию до явного подтверждения оператором.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0006
+    requirement:
+      uid: SYS-004
+      mid: mid_req_sys_004
+    architecture:
+      model_id: pump-station
+      uuid: 20000000-0000-4000-8000-000000000215
+      type: SystemFunction
+      name_snapshot: Store Event
+    relation: satisfied_by
+    rationale: Функция сохраняет журнал событий с требуемым сроком хранения.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0007
+    requirement:
+      uid: IF-001
+      mid: mid_req_if_001
+    architecture:
+      model_id: pump-station
+      uuid: 20000000-0000-4000-8000-000000000220
+      type: FunctionalExchange
+      name_snapshot: Raw Telemetry
+    relation: implemented_by
+    rationale: Обмен представляет входной поток телеметрии Modbus TCP.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0008
+    requirement:
+      uid: SW-003
+      mid: mid_req_sw_003
+    architecture:
+      model_id: pump-station
+      uuid: 30000000-0000-4000-8000-000000000312
+      type: LogicalComponent
+      name_snapshot: Alarm Manager
+    relation: allocated_to
+    rationale: Компонент владеет автоматом состояний аварии.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0009
+    requirement:
+      uid: SAF-001
+      mid: mid_req_saf_001
+    architecture:
+      model_id: pump-station
+      uuid: 20000000-0000-4000-8000-000000000211
+      type: SystemFunction
+      name_snapshot: Validate Measurements
+    relation: constrains
+    rationale: Защитное требование ограничивает правила обработки недостоверных данных.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z
+
+  - id: TL-0010
+    requirement:
+      uid: SAF-002
+      mid: mid_req_saf_002
+    architecture:
+      model_id: pump-station
+      uuid: 20000000-0000-4000-8000-000000000230
+      type: FunctionalChain
+      name_snapshot: Pressure Alarm Handling
+    relation: constrains
+    rationale: Цепочка включает фиксацию аварии при потере связи и её сохранение.
+    created_at: 2026-09-02T10:00:00Z
+    updated_at: 2026-09-02T10:00:00Z

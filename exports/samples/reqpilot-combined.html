@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport"
+content="width=device-width,initial-scale=1"><title>Система мониторинга насосной станции — ReqPilot</title>
+<style>
+:root{color-scheme:light;--ink:#13232d;--muted:#556a75;--line:#ccd9df;
+--panel:#f5f8f9;--accent:#0e6675;--ok:#167347;--warn:#9a5b00;--bad:#a52a2a}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);
+font:14px/1.45 Inter,Segoe UI,Arial,sans-serif}main{max-width:1480px;margin:auto;
+padding:32px}h1{font-size:28px;margin:0 0 4px}h2{font-size:19px;margin:30px 0 10px}
+p{margin:6px 0}.muted{color:var(--muted)}.banner{border:2px solid #a86300;
+background:#fff8e6;padding:12px 16px;margin:20px 0;font-weight:700}.cards{display:grid;
+grid-template-columns:repeat(6,minmax(130px,1fr));gap:10px}.card{background:var(--panel);
+border:1px solid var(--line);border-radius:8px;padding:13px}.card b{display:block;
+font-size:23px}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid var(--line);
+padding:7px 8px;text-align:left;vertical-align:top}th{background:#e9f0f2;
+position:sticky;top:0}.scroll{max-height:520px;overflow:auto;border:1px solid var(--line)}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:1px 7px;
+margin:1px}.diagrams{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+figure{margin:0;border:1px solid var(--line);padding:10px;border-radius:8px}figure img{width:100%;
+height:260px;object-fit:contain;background:#fff}figcaption{font-weight:700;margin-top:8px}
+footer{border-top:1px solid var(--line);margin-top:32px;padding-top:14px;color:var(--muted)}
+@media print{main{max-width:none;padding:12mm}.scroll{max-height:none;overflow:visible}
+th{position:static}.diagrams{grid-template-columns:1fr}.card{break-inside:avoid}}
+</style></head><body><main>
+<header><h1>Система мониторинга насосной станции</h1>
+<p class="muted">ReqPilot Engineering Workbench · автономный производный отчёт ·
+revision <code>67549a0c555d1375de4288dc20cc6dfa707315926fe199c21ce1ddf88cfac127</code></p></header>
+<div class="banner">Демо-архитектура, не загруженная из Capella</div>
+<section><h2>Сводка</h2><div class="cards">
+<div class="card"><span>Требования</span><b>24</b></div>
+<div class="card"><span>Архитектура</span><b>37</b></div>
+<div class="card"><span>Внутренние связи</span><b>27</b></div>
+<div class="card"><span>Trace links</span><b>10</b></div>
+<div class="card"><span>Тестовое покрытие</span><b>100.0%</b></div>
+<div class="card"><span>Архитектурное покрытие</span><b>57.1%</b></div>
+</div></section>
+<section><h2>Требования</h2><div class="scroll"><table><thead><tr><th>UID</th><th>MID</th>
+<th>Тип</th><th>Статус</th><th>Приоритет</th><th>Название</th><th>Требование</th>
+<th>Владелец</th></tr></thead><tbody><tr>
+<td><b>STK-001</b></td><td><code>mid_req_stk_001</code></td><td>Stakeholder</td>
+<td>Approved</td><td>High</td><td>Отображение состояния насосов</td>
+<td>Система должна предоставлять оператору актуальное состояние каждого насоса насосной
+станции.
+</td><td>Владелец продукта</td></tr><tr>
+<td><b>STK-002</b></td><td><code>mid_req_stk_002</code></td><td>Stakeholder</td>
+<td>Approved</td><td>Critical</td><td>Предупреждение о превышении давления</td>
+<td>Система должна предупреждать оператора о превышении допустимого порога давления.
+</td><td>Владелец продукта</td></tr><tr>
+<td><b>STK-003</b></td><td><code>mid_req_stk_003</code></td><td>Stakeholder</td>
+<td>Approved</td><td>Medium</td><td>Просмотр истории событий</td>
+<td>Система должна позволять инженеру эксплуатации просматривать историю событий насосной
+станции.
+</td><td>Инженер эксплуатации</td></tr><tr>
+<td><b>SYS-001</b></td><td><code>mid_req_sys_001</code></td><td>System</td>
+<td>Approved</td><td>High</td><td>Обновление состояния не позднее 2 секунд</td>
+<td>Система должна обновлять отображаемое состояние насоса не позднее чем через 2 секунды
+после получения соответствующей телеметрии.
+</td><td>Системный инженер</td></tr><tr>
+<td><b>SYS-002</b></td><td><code>mid_req_sys_002</code></td><td>System</td>
+<td>Approved</td><td>Critical</td><td>Формирование аварии при превышении порога</td>
+<td>Система должна формировать аварию давления, когда достоверное измеренное значение
+давления превышает настроенный аварийный порог, и применять гистерезис 0.2 bar:
+после подтверждения аварии повторное срабатывание разрешается только после снижения
+давления до значения не выше порога минус 0.2 bar и нового превышения порога.
+</td><td>Системный инженер</td></tr><tr>
+<td><b>SYS-003</b></td><td><code>mid_req_sys_003</code></td><td>System</td>
+<td>Approved</td><td>Critical</td><td>Сохранение аварии до подтверждения</td>
+<td>Система должна сохранять активный признак аварии давления до явного подтверждения
+оператором, даже если измеренное давление вернулось в допустимый диапазон.
+</td><td>Системный инженер</td></tr><tr>
+<td><b>SYS-004</b></td><td><code>mid_req_sys_004</code></td><td>System</td>
+<td>Approved</td><td>Medium</td><td>Хранение журнала не менее 30 суток</td>
+<td>Система должна хранить журнал событий насосной станции не менее 30 календарных суток.
+</td><td>Системный инженер</td></tr><tr>
+<td><b>SYS-005</b></td><td><code>mid_req_sys_005</code></td><td>System</td>
+<td>Approved</td><td>Critical</td><td>Обнаружение потери связи не позднее 3 секунд</td>
+<td>Система должна обнаруживать потерю связи с источником телеметрии не позднее чем через 3
+секунды после последнего корректного сообщения.
+</td><td>Системный инженер</td></tr><tr>
+<td><b>SYS-006</b></td><td><code>mid_req_sys_006</code></td><td>System</td>
+<td>Approved</td><td>High</td><td>Отображение признака устаревших данных</td>
+<td>Система должна отображать на HMI явный признак устаревших данных при установленном
+признаке потери связи с источником телеметрии и сохранять его до получения нового
+корректного сообщения.
+</td><td>Системный инженер</td></tr><tr>
+<td><b>IF-001</b></td><td><code>mid_req_if_001</code></td><td>Interface</td>
+<td>Approved</td><td>High</td><td>Приём телеметрии по Modbus TCP</td>
+<td>Система должна принимать значения состояния насосов и давления от шлюза датчиков по
+протоколу Modbus TCP.
+</td><td>Инженер интеграции</td></tr><tr>
+<td><b>IF-002</b></td><td><code>mid_req_if_002</code></td><td>Interface</td>
+<td>Approved</td><td>Medium</td><td>Синхронизация времени по NTP</td>
+<td>Система должна синхронизировать системное время с настроенным сервером NTP.
+</td><td>Инженер интеграции</td></tr><tr>
+<td><b>SW-001</b></td><td><code>mid_req_sw_001</code></td><td>Software</td>
+<td>Approved</td><td>High</td><td>Опрос телеметрии каждые 500 мс</td>
+<td>Программное обеспечение должно инициировать опрос телеметрии с периодом 500 миллисекунд.
+</td><td>Ведущий разработчик</td></tr><tr>
+<td><b>SW-002</b></td><td><code>mid_req_sw_002</code></td><td>Software</td>
+<td>Approved</td><td>Critical</td><td>Сравнение давления с порогом</td>
+<td>Программное обеспечение должно сравнивать каждое принятое достоверное значение давления
+с текущим настроенным аварийным порогом.
+</td><td>Ведущий разработчик</td></tr><tr>
+<td><b>SW-003</b></td><td><code>mid_req_sw_003</code></td><td>Software</td>
+<td>Approved</td><td>Critical</td><td>Автомат состояний аварии</td>
+<td>Программное обеспечение должно реализовать автомат состояний аварии с состояниями
+«норма», «активна неподтверждённая» и «активна подтверждённая».
+</td><td>Ведущий разработчик</td></tr><tr>
+<td><b>SW-004</b></td><td><code>mid_req_sw_004</code></td><td>Software</td>
+<td>Approved</td><td>Medium</td><td>Запись события с меткой UTC</td>
+<td>Программное обеспечение должно сохранять каждое событие журнала с временной меткой в UTC.
+</td><td>Ведущий разработчик</td></tr><tr>
+<td><b>SAF-001</b></td><td><code>mid_req_saf_001</code></td><td>Safety</td>
+<td>Approved</td><td>Critical</td><td>Недостоверные данные не снимают аварию</td>
+<td>Система не должна снимать зафиксированную аварию на основании значения давления,
+помеченного как недостоверное.
+</td><td>Инженер по безопасности</td></tr><tr>
+<td><b>SAF-002</b></td><td><code>mid_req_saf_002</code></td><td>Safety</td>
+<td>Approved</td><td>Critical</td><td>Потеря связи формирует фиксируемую аварию</td>
+<td>Система должна формировать фиксируемую аварию при обнаружении потери связи с источником
+телеметрии.
+</td><td>Инженер по безопасности</td></tr><tr>
+<td><b>TST-001</b></td><td><code>mid_req_tst_001</code></td><td>TestCase</td>
+<td>Approved</td><td>High</td><td>Проверка задержки отображения</td>
+<td>Подать 100 изменений состояния насоса с зарегистрированным временем приёма и измерить
+время появления каждого нового состояния на HMI.
+</td><td>Инженер по испытаниям</td></tr><tr>
+<td><b>TST-002</b></td><td><code>mid_req_tst_002</code></td><td>TestCase</td>
+<td>Approved</td><td>Critical</td><td>Проверка аварийного порога</td>
+<td>Настроить аварийный порог и последовательно подать значения ниже порога, равное порогу и
+выше порога. После срабатывания подтвердить аварию, изменять давление в диапазоне между
+порогом и порогом минус 0.2 bar, затем снизить его до порога минус 0.2 bar и снова
+превысить порог.
+</td><td>Инженер по испытаниям</td></tr><tr>
+<td><b>TST-003</b></td><td><code>mid_req_tst_003</code></td><td>TestCase</td>
+<td>Approved</td><td>Critical</td><td>Проверка подтверждения аварии</td>
+<td>Сформировать аварию, вернуть давление в допустимый диапазон, подать недостоверные данные и
+затем выполнить явное подтверждение оператором.
+</td><td>Инженер по испытаниям</td></tr><tr>
+<td><b>TST-004</b></td><td><code>mid_req_tst_004</code></td><td>TestCase</td>
+<td>Review</td><td>Medium</td><td>Проверка хранения журнала</td>
+<td>Заполнить журнал событиями расчётной максимальной интенсивности, сдвинуть тестовую временную
+шкалу на 30 суток и проверить доступность событий на границе периода хранения.
+</td><td>Инженер по испытаниям</td></tr><tr>
+<td><b>TST-005</b></td><td><code>mid_req_tst_005</code></td><td>TestCase</td>
+<td>Approved</td><td>Critical</td><td>Проверка потери связи</td>
+<td>Прекратить передачу телеметрии, измерить время обнаружения потери связи, восстановить
+передачу и проверить поведение фиксируемой аварии.
+</td><td>Инженер по испытаниям</td></tr><tr>
+<td><b>TST-006</b></td><td><code>mid_req_tst_006</code></td><td>TestCase</td>
+<td>Approved</td><td>Medium</td><td>Проверка временных меток</td>
+<td>Подключить контролируемый NTP-сервер, сформировать 1 000 событий и сравнить сохранённые
+временные метки UTC с эталонным временем.
+</td><td>Инженер по испытаниям</td></tr><tr>
+<td><b>TST-007</b></td><td><code>mid_req_tst_007</code></td><td>TestCase</td>
+<td>Approved</td><td>High</td><td>Проверка признака устаревших данных</td>
+<td>В 20 испытаниях прекратить поток телеметрии, дождаться фиксации потери связи,
+наблюдать признак устаревших данных на HMI в течение 10 циклов обновления и затем
+восстановить передачу корректных сообщений.
+</td><td>Инженер по испытаниям</td></tr>
+</tbody></table></div></section>
+<section><h2>Межсистемная трассировка</h2><div class="scroll"><table><thead><tr>
+<th>ID</th><th>Требование</th><th>Связь</th><th>Архитектурный объект</th><th>UUID</th>
+<th>Статус</th></tr></thead><tbody><tr>
+<td>TL-0001</td><td>STK-001</td><td>satisfied_by</td>
+<td>Monitor Pump Station</td>
+<td><code>10000000-0000-4000-8000-000000000110</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0002</td><td>STK-002</td><td>satisfied_by</td>
+<td>Respond to Pressure Alarm</td>
+<td><code>10000000-0000-4000-8000-000000000111</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0003</td><td>SYS-001</td><td>satisfied_by</td>
+<td>Publish HMI State</td>
+<td><code>20000000-0000-4000-8000-000000000216</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0004</td><td>SYS-002</td><td>satisfied_by</td>
+<td>Evaluate Pressure Threshold</td>
+<td><code>20000000-0000-4000-8000-000000000213</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0005</td><td>SYS-003</td><td>satisfied_by</td>
+<td>Manage Alarm Lifecycle</td>
+<td><code>20000000-0000-4000-8000-000000000214</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0006</td><td>SYS-004</td><td>satisfied_by</td>
+<td>Store Event</td>
+<td><code>20000000-0000-4000-8000-000000000215</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0007</td><td>IF-001</td><td>implemented_by</td>
+<td>Raw Telemetry</td>
+<td><code>20000000-0000-4000-8000-000000000220</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0008</td><td>SW-003</td><td>allocated_to</td>
+<td>Alarm Manager</td>
+<td><code>30000000-0000-4000-8000-000000000312</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0009</td><td>SAF-001</td><td>constrains</td>
+<td>Validate Measurements</td>
+<td><code>20000000-0000-4000-8000-000000000211</code></td>
+<td class="ok">valid</td>
+</tr><tr>
+<td>TL-0010</td><td>SAF-002</td><td>constrains</td>
+<td>Pressure Alarm Handling</td>
+<td><code>20000000-0000-4000-8000-000000000230</code></td>
+<td class="ok">valid</td>
+</tr></tbody></table></div></section>
+<section><h2>Непокрытые требования</h2>
+<p><b>Тестами:</b> нет</p>
+<p><b>Архитектурой:</b>
+IF-002, SW-001, SW-002, SW-004, SYS-005, SYS-006</p>
+</section>
+<section><h2>Матрица требования ↔ тесты</h2><table><thead><tr><th>Требование</th>
+<th>Проверяющие TestCase</th></tr></thead><tbody><tr>
+<td>SYS-001</td><td>TST-001</td></tr><tr>
+<td>SYS-002</td><td>TST-002</td></tr><tr>
+<td>SYS-003</td><td>TST-003</td></tr><tr>
+<td>SYS-004</td><td>TST-004</td></tr><tr>
+<td>SYS-005</td><td>TST-005</td></tr><tr>
+<td>SYS-006</td><td>TST-007</td></tr><tr>
+<td>SAF-001</td><td>TST-003</td></tr><tr>
+<td>SAF-002</td><td>TST-005</td></tr>
+</tbody></table></section>
+<section><h2>Матрица требования ↔ функции</h2><table><thead><tr><th>Требование</th>
+<th>Функции</th></tr></thead><tbody><tr>
+<td>SYS-001</td><td>Publish HMI State</td></tr><tr>
+<td>SYS-002</td><td>Evaluate Pressure Threshold</td></tr><tr>
+<td>SYS-003</td><td>Manage Alarm Lifecycle</td></tr><tr>
+<td>SYS-004</td><td>Store Event</td></tr><tr>
+<td>SYS-005</td><td>—</td></tr><tr>
+<td>SYS-006</td><td>—</td></tr><tr>
+<td>IF-001</td><td>Raw Telemetry</td></tr><tr>
+<td>IF-002</td><td>—</td></tr><tr>
+<td>SW-001</td><td>—</td></tr><tr>
+<td>SW-002</td><td>—</td></tr><tr>
+<td>SW-003</td><td>—</td></tr><tr>
+<td>SW-004</td><td>—</td></tr><tr>
+<td>SAF-001</td><td>Validate Measurements</td></tr><tr>
+<td>SAF-002</td><td>Pressure Alarm Handling</td></tr>
+</tbody></table></section>
+<section><h2>Матрица требования ↔ компоненты</h2><table><thead><tr><th>Требование</th>
+<th>Компоненты</th></tr></thead><tbody><tr>
+<td>SYS-001</td><td>—</td></tr><tr>
+<td>SYS-002</td><td>—</td></tr><tr>
+<td>SYS-003</td><td>—</td></tr><tr>
+<td>SYS-004</td><td>—</td></tr><tr>
+<td>SYS-005</td><td>—</td></tr><tr>
+<td>SYS-006</td><td>—</td></tr><tr>
+<td>IF-001</td><td>—</td></tr><tr>
+<td>IF-002</td><td>—</td></tr><tr>
+<td>SW-001</td><td>—</td></tr><tr>
+<td>SW-002</td><td>—</td></tr><tr>
+<td>SW-003</td><td>Alarm Manager</td></tr><tr>
+<td>SW-004</td><td>—</td></tr><tr>
+<td>SAF-001</td><td>—</td></tr><tr>
+<td>SAF-002</td><td>—</td></tr>
+</tbody></table></section>
+<section><h2>Матрица функции ↔ компоненты</h2><table><thead><tr><th>Функция</th>
+<th>Компоненты</th></tr></thead><tbody><tr>
+<td>Acknowledgement</td><td>—</td></tr><tr>
+<td>Acquire Telemetry</td><td>Telemetry Adapter</td></tr><tr>
+<td>Alarm Event</td><td>—</td></tr><tr>
+<td>Determine Pump State</td><td>State Processor</td></tr><tr>
+<td>Evaluate Pressure Threshold</td><td>Alarm Manager</td></tr><tr>
+<td>Event Record</td><td>—</td></tr><tr>
+<td>HMI Update</td><td>—</td></tr><tr>
+<td>Manage Alarm Lifecycle</td><td>Alarm Manager</td></tr><tr>
+<td>Pressure Alarm Handling</td><td>—</td></tr><tr>
+<td>Publish HMI State</td><td>HMI Service</td></tr><tr>
+<td>Pump State</td><td>—</td></tr><tr>
+<td>Raw Telemetry</td><td>—</td></tr><tr>
+<td>Store Event</td><td>Event Store</td></tr><tr>
+<td>Validate Measurements</td><td>State Processor</td></tr><tr>
+<td>Validated Measurement</td><td>—</td></tr>
+</tbody></table></section>
+<section><h2>Диаграммы архитектуры</h2><div class="diagrams">
+<figure><img alt="[FIXTURE] Logical Allocations" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDMzMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJGaXh0dXJlIGxvZ2ljYWwgYWxsb2NhdGlvbnMiPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjMzMCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjI4IiB5PSI0MCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiMwZjE3MmEiPkZJWFRVUkUgwrcgTG9naWNhbCBjb21wb25lbnRzPC90ZXh0PjxnIHN0cm9rZT0iIzBmNzY2ZSIgZmlsbD0iI2YwZmRmYSI+PHJlY3QgeD0iMjgiIHk9IjEwNSIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIxMDAiIHJ4PSIxMCIvPjxyZWN0IHg9IjIyMiIgeT0iMTA1IiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjEwMCIgcng9IjEwIi8+PHJlY3QgeD0iNDE2IiB5PSIxMDUiIHdpZHRoPSIxNjAiIGhlaWdodD0iMTAwIiByeD0iMTAiLz48cmVjdCB4PSI2MTAiIHk9IjEwNSIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIxMDAiIHJ4PSIxMCIvPjxyZWN0IHg9IjgwNCIgeT0iMTA1IiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjEwMCIgcng9IjEwIi8+PC9nPjxnIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTM0ZTRhIj48dGV4dCB4PSIxMDgiIHk9IjE2MCI+VGVsZW1ldHJ5IEFkYXB0ZXI8L3RleHQ+PHRleHQgeD0iMzAyIiB5PSIxNjAiPlN0YXRlIFByb2Nlc3NvcjwvdGV4dD48dGV4dCB4PSI0OTYiIHk9IjE2MCI+QWxhcm0gTWFuYWdlcjwvdGV4dD48dGV4dCB4PSI2OTAiIHk9IjE2MCI+RXZlbnQgU3RvcmU8L3RleHQ+PHRleHQgeD0iODg0IiB5PSIxNjAiPkhNSSBTZXJ2aWNlPC90ZXh0PjwvZz48cGF0aCBkPSJNMTg4IDE1NSBMMjIyIDE1NSBNMzgyIDE1NSBMNDE2IDE1NSBNNTc2IDE1NSBMNjEwIDE1NSBNNzcwIDE1NSBMODA0IDE1NSIgc3Ryb2tlPSIjNjQ3NDhiIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz48L3N2Zz4=">
+<figcaption>[FIXTURE] Logical Allocations</figcaption><p class="muted">90000000-0000-4000-8000-000000000003</p></figure>
+<figure><img alt="[FIXTURE] Operational Capabilities" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgMzYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkZpeHR1cmUgb3BlcmF0aW9uYWwgY2FwYWJpbGl0aWVzIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjM2MCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjMyIiB5PSI0MiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiMwZjE3MmEiPkZJWFRVUkUgwrcgT3BlcmF0aW9uYWwgY2FwYWJpbGl0aWVzPC90ZXh0PjxyZWN0IHg9IjMyIiB5PSI5MCIgd2lkdGg9IjE5MCIgaGVpZ2h0PSI3MiIgcng9IjEwIiBmaWxsPSIjZTBmMmZlIiBzdHJva2U9IiMwMzY5YTEiLz48dGV4dCB4PSI1OCIgeT0iMTMyIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzBjNGE2ZSI+T3BlcmF0b3I8L3RleHQ+PHJlY3QgeD0iMzAwIiB5PSI3MCIgd2lkdGg9IjI1MCIgaGVpZ2h0PSI2NCIgcng9IjMyIiBmaWxsPSIjZWNmZWZmIiBzdHJva2U9IiMwODkxYjIiLz48dGV4dCB4PSIzNDAiIHk9IjEwOCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxNjRlNjMiPk1vbml0b3IgUHVtcCBTdGF0aW9uPC90ZXh0PjxyZWN0IHg9IjMwMCIgeT0iMTU1IiB3aWR0aD0iMjUwIiBoZWlnaHQ9IjY0IiByeD0iMzIiIGZpbGw9IiNmZmY3ZWQiIHN0cm9rZT0iI2VhNTgwYyIvPjx0ZXh0IHg9IjMyNyIgeT0iMTkzIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzdjMmQxMiI+UmVzcG9uZCB0byBQcmVzc3VyZSBBbGFybTwvdGV4dD48cmVjdCB4PSIzMDAiIHk9IjI0MCIgd2lkdGg9IjI1MCIgaGVpZ2h0PSI2NCIgcng9IjMyIiBmaWxsPSIjZjBmZGY0IiBzdHJva2U9IiMxNmEzNGEiLz48dGV4dCB4PSIzNDciIHk9IjI3OCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxNDUzMmQiPlJldmlldyBFdmVudCBIaXN0b3J5PC90ZXh0PjxyZWN0IHg9IjY0MCIgeT0iMjAwIiB3aWR0aD0iMjIwIiBoZWlnaHQ9IjcyIiByeD0iMTAiIGZpbGw9IiNlZGU5ZmUiIHN0cm9rZT0iIzdjM2FlZCIvPjx0ZXh0IHg9IjY3MiIgeT0iMjQyIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzRjMWQ5NSI+TWFpbnRlbmFuY2UgRW5naW5lZXI8L3RleHQ+PHBhdGggZD0iTTIyMiAxMjYgTDMwMCAxMDIgTTIyMiAxMjYgTDMwMCAxODcgTTY0MCAyMzYgTDU1MCAyNzIiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+PC9zdmc+">
+<figcaption>[FIXTURE] Operational Capabilities</figcaption><p class="muted">90000000-0000-4000-8000-000000000001</p></figure>
+<figure><img alt="[FIXTURE] System Functional Flow" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMTAwIDQ0MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJGaXh0dXJlIHN5c3RlbSBmdW5jdGlvbmFsIGZsb3ciPjxkZWZzPjxtYXJrZXIgaWQ9ImFycm93IiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSI2IiBtYXJrZXJIZWlnaHQ9IjYiIG9yaWVudD0iYXV0by1zdGFydC1yZXZlcnNlIj48cGF0aCBkPSJNIDAgMCBMIDEwIDUgTCAwIDEwIHoiIGZpbGw9IiM0NzU1NjkiLz48L21hcmtlcj48L2RlZnM+PHJlY3Qgd2lkdGg9IjExMDAiIGhlaWdodD0iNDQwIiBmaWxsPSIjZjhmYWZjIi8+PHRleHQgeD0iMjgiIHk9IjM4IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMCIgZmlsbD0iIzBmMTcyYSI+RklYVFVSRSDCtyBQcmVzc3VyZSBBbGFybSBIYW5kbGluZzwvdGV4dD48ZyBmaWxsPSIjZWNmZWZmIiBzdHJva2U9IiMwODkxYjIiPjxyZWN0IHg9IjMwIiB5PSIxMDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNzAiIHJ4PSI4Ii8+PHJlY3QgeD0iMjYwIiB5PSIxMDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNzAiIHJ4PSI4Ii8+PHJlY3QgeD0iNDkwIiB5PSIxMDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNzAiIHJ4PSI4Ii8+PHJlY3QgeD0iNzIwIiB5PSIxMDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNzAiIHJ4PSI4Ii8+PHJlY3QgeD0iNDkwIiB5PSIyNzAiIHdpZHRoPSIxODAiIGhlaWdodD0iNzAiIHJ4PSI4Ii8+PHJlY3QgeD0iNzIwIiB5PSIyNzAiIHdpZHRoPSIxODAiIGhlaWdodD0iNzAiIHJ4PSI4Ii8+PHJlY3QgeD0iOTMwIiB5PSIxODUiIHdpZHRoPSIxNDUiIGhlaWdodD0iNzAiIHJ4PSI4Ii8+PC9nPjxnIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTY0ZTYzIj48dGV4dCB4PSIxMjAiIHk9IjE0MCI+QWNxdWlyZSBUZWxlbWV0cnk8L3RleHQ+PHRleHQgeD0iMzUwIiB5PSIxNDAiPlZhbGlkYXRlIE1lYXN1cmVtZW50czwvdGV4dD48dGV4dCB4PSI1ODAiIHk9IjE0MCI+RGV0ZXJtaW5lIFB1bXAgU3RhdGU8L3RleHQ+PHRleHQgeD0iODEwIiB5PSIxNDAiPlB1Ymxpc2ggSE1JIFN0YXRlPC90ZXh0Pjx0ZXh0IHg9IjU4MCIgeT0iMzEwIj5FdmFsdWF0ZSBUaHJlc2hvbGQ8L3RleHQ+PHRleHQgeD0iODEwIiB5PSIzMTAiPk1hbmFnZSBBbGFybTwvdGV4dD48dGV4dCB4PSIxMDAyIiB5PSIyMjUiPlN0b3JlIEV2ZW50PC90ZXh0PjwvZz48ZyBzdHJva2U9IiM0NzU1NjkiIHN0cm9rZS13aWR0aD0iMiIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiPjxwYXRoIGQ9Ik0yMTAgMTM1IEwyNjAgMTM1Ii8+PHBhdGggZD0iTTQ0MCAxMzUgTDQ5MCAxMzUiLz48cGF0aCBkPSJNNjcwIDEzNSBMNzIwIDEzNSIvPjxwYXRoIGQ9Ik0zNTAgMTcwIEw1MzUgMjcwIi8+PHBhdGggZD0iTTY3MCAzMDUgTDcyMCAzMDUiLz48cGF0aCBkPSJNOTAwIDMwNSBMOTUwIDI1NSIvPjxwYXRoIGQ9Ik05MDAgMzA1IEw4NTAgMTcwIi8+PC9nPjwvc3ZnPg==">
+<figcaption>[FIXTURE] System Functional Flow</figcaption><p class="muted">90000000-0000-4000-8000-000000000002</p></figure>
+</div></section>
+
+<footer><p>Generated from StrictDoc native JSON, read-only fixture and
+trace-links.yaml. This report is not a source of truth.</p>
+<p>StrictDoc 0.29.0 · capellambse target 0.8.0 · schema 1 ·
+fingerprints: requirements 67549a0c555d1375de4288dc20cc6dfa707315926fe199c21ce1ddf88cfac127, architecture 5ffb7e9adf78588e3bf6cef8c54b70c706354a681389ee7baf9823e9ba723105,
+links 0908f48e8b3d78594ce1cd9790f6c52d2b97828a2feea4e3e0487b1741732487</p></footer>
+</main></body></html>

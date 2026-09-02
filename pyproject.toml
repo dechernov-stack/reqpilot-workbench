@@ -1,0 +1,71 @@
+[project]
+name = "reqpilot-workbench"
+version = "0.1.0"
+description = "Local engineering workbench over StrictDoc and Eclipse Capella"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+dependencies = [
+  "fastapi==0.116.1",
+  "filelock==3.18.0",
+  "jinja2==3.1.6",
+  "lxml==6.0.0",
+  "pydantic==2.11.7",
+  "python-multipart==0.0.20",
+  "ruamel.yaml==0.18.14",
+  "uvicorn==0.35.0",
+]
+
+[project.optional-dependencies]
+strictdoc-runtime = ["strictdoc==0.29.0"]
+# v0.8.0 is an official GitHub release/tag but was not published to PyPI.
+capella-runtime = [
+  "capellambse @ git+https://github.com/dbinfrago/py-capellambse.git@2abba5cd8922a306cdb735a9c19bcfefdb74a7e8",
+]
+
+[dependency-groups]
+dev = [
+  "httpx==0.28.1",
+  "mypy==1.17.0",
+  "pytest==8.4.1",
+  "pytest-cov==6.2.1",
+  "ruff==0.12.5",
+]
+
+[tool.uv]
+package = false
+conflicts = [
+  [
+    { extra = "strictdoc-runtime" },
+    { extra = "capella-runtime" },
+  ],
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["backend/tests"]
+pythonpath = ["backend"]
+
+[tool.coverage.run]
+branch = true
+source = ["backend/reqpilot"]
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "SIM", "RUF"]
+ignore = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["reqpilot"]
+mypy_path = "backend"
+warn_unused_ignores = true

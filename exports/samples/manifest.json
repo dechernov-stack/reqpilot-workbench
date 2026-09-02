@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "generated_by": "tools/collect_samples.py",
+  "source": "native StrictDoc 0.29.0 export jobs and combined report",
+  "canonical_revision": "67549a0c555d1375de4288dc20cc6dfa707315926fe199c21ce1ddf88cfac127",
+  "artifacts": [
+    {
+      "path": "excel/01_stakeholder.xlsx",
+      "size": 6590,
+      "sha256": "fc3cfba5111522c308bbc729b9e099ae6ba2d06c7693fe68c525cb86756e9754"
+    },
+    {
+      "path": "excel/02_system.xlsx",
+      "size": 7128,
+      "sha256": "a70363263a993e60062333748154b8fa1d0064c0a80a40a9230b21be47e6388f"
+    },
+    {
+      "path": "excel/03_software_interface.xlsx",
+      "size": 6922,
+      "sha256": "ffd5e18517c5425e3f5fcd9aed31e89a14f1d77c28ed9e1e4c9165fddf26d1a7"
+    },
+    {
+      "path": "excel/04_safety.xlsx",
+      "size": 6568,
+      "sha256": "a48b321861fe386e37e5d87ae0e25e8606f6186277b1ed4c50a29346216968d0"
+    },
+    {
+      "path": "excel/05_tests.xlsx",
+      "size": 7361,
+      "sha256": "76851ab120541b9d65b52cac5825bd10a861d16b1b5c296915e1d647914a0070"
+    },
+    {
+      "path": "reqpilot-combined.html",
+      "size": 26938,
+      "sha256": "52ff641fb7215bba6ca32b184f3c0ff7652eecf4a8160b12b1ab799f6d1b2fff"
+    },
+    {
+      "path": "strictdoc-html.zip",
+      "size": 7474379,
+      "sha256": "6fd000e00cb5678f684625ac3ee2b70a9a41e0d8c809af95567f709892de0ac3"
+    },
+    {
+      "path": "strictdoc-index.json",
+      "size": 121716,
+      "sha256": "25888bf2a23471d59dcb60bdf132b8bddf64f276f63abc6ec067d15177f2f4cc"
+    },
+    {
+      "path": "strictdoc-requirements.pdf",
+      "size": 663342,
+      "sha256": "d38f352fbb2f1fa26329da6cd32bc23f3b6676811061924bc90936dca2f23334"
+    },
+    {
+      "path": "strictdoc-requirements.reqif",
+      "size": 203279,
+      "sha256": "04aa511b5699d4c752727823d1ac0c5dc13a979c7a29926e1300a0471ac5003b"
+    }
+  ]
+}

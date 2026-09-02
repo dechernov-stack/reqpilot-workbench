@@ -1,0 +1,41 @@
+schema_version: 1
+
+project:
+  id: pump-station-pilot
+  title: Система мониторинга насосной станции
+
+server:
+  host: 127.0.0.1
+  port: 8080
+
+strictdoc:
+  root: requirements
+  config: requirements/strictdoc_config.py
+  managed_documents:
+    - requirements/01_stakeholder.sdoc
+    - requirements/02_system.sdoc
+    - requirements/03_software_interface.sdoc
+    - requirements/04_safety.sdoc
+    - requirements/05_tests.sdoc
+  document_mids:
+    mid_doc_stakeholder: requirements/01_stakeholder.sdoc
+    mid_doc_system: requirements/02_system.sdoc
+    mid_doc_software_interface: requirements/03_software_interface.sdoc
+    mid_doc_safety: requirements/04_safety.sdoc
+    mid_doc_verification: requirements/05_tests.sdoc
+  export_root: exports/strictdoc
+  deleted_uids: deleted-uids.json
+
+capella:
+  mode: fixture
+  model_path: null
+  entrypoint: null
+  read_only: true
+  cache_path: .reqpilot/cache/capella-index.json
+
+trace_links:
+  path: trace-links.yaml
+
+fixture:
+  enabled: true
+  path: fixtures/architecture-fixture.json

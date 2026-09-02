@@ -1,0 +1,61 @@
+[GRAMMAR]
+ELEMENTS:
+- TAG: REQUIREMENT
+  PROPERTIES:
+    VIEW_STYLE: Zebra
+  FIELDS:
+  - TITLE: MID
+    TYPE: String
+    REQUIRED: True
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: True
+  - TITLE: TYPE
+    TYPE: String
+    REQUIRED: True
+  - TITLE: STATUS
+    TYPE: String
+    REQUIRED: True
+  - TITLE: PRIORITY
+    TYPE: String
+    REQUIRED: True
+  - TITLE: VERIFICATION_METHOD
+    TYPE: String
+    REQUIRED: True
+  - TITLE: OWNER
+    TYPE: String
+    REQUIRED: True
+  - TITLE: SOURCE
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TAGS
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+  - TITLE: RATIONALE
+    TYPE: String
+    REQUIRED: False
+  - TITLE: ACCEPTANCE_CRITERIA
+    TYPE: String
+    REQUIRED: True
+  - TITLE: COMMENT
+    TYPE: String
+    REQUIRED: False
+  RELATIONS:
+  - TYPE: Parent
+    ROLE: Refines
+    REVERSE_ROLE: RefinedBy
+  - TYPE: Parent
+    ROLE: Derives
+    REVERSE_ROLE: DerivedBy
+  - TYPE: Parent
+    ROLE: Verifies
+    REVERSE_ROLE: VerifiedBy
+  - TYPE: Parent
+    ROLE: DependsOn
+    REVERSE_ROLE: RequiredBy

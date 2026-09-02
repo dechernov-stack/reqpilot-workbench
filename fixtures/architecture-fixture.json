@@ -1,0 +1,473 @@
+{
+  "schema_version": 1,
+  "model_id": "pump-station",
+  "source_kind": "fixture",
+  "source_label": "fixture:architecture-fixture.json — not loaded from Capella",
+  "fingerprint": "recalculated-by-adapter",
+  "indexed_duration_ms": 0,
+  "elements": [
+    {
+      "uuid": "10000000-0000-4000-8000-000000000000",
+      "model_id": "pump-station",
+      "type": "OperationalAnalysis",
+      "layer": "OA",
+      "name": "Pump Station Operations",
+      "description": "Fixture-only operational layer for the pump-station blueprint.",
+      "path": ["Pump Station Operations"],
+      "parent_uuid": null
+    },
+    {
+      "uuid": "10000000-0000-4000-8000-000000000101",
+      "model_id": "pump-station",
+      "type": "Actor",
+      "layer": "OA",
+      "name": "Operator",
+      "description": "Monitors the station and acknowledges alarms.",
+      "path": ["Pump Station Operations", "Operator"],
+      "parent_uuid": "10000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "10000000-0000-4000-8000-000000000102",
+      "model_id": "pump-station",
+      "type": "Actor",
+      "layer": "OA",
+      "name": "Maintenance Engineer",
+      "description": "Reviews events and investigates station faults.",
+      "path": ["Pump Station Operations", "Maintenance Engineer"],
+      "parent_uuid": "10000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "10000000-0000-4000-8000-000000000110",
+      "model_id": "pump-station",
+      "type": "OperationalCapability",
+      "layer": "OA",
+      "name": "Monitor Pump Station",
+      "description": "Observe current pump and communication state.",
+      "path": ["Pump Station Operations", "Capabilities", "Monitor Pump Station"],
+      "parent_uuid": "10000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "10000000-0000-4000-8000-000000000111",
+      "model_id": "pump-station",
+      "type": "OperationalCapability",
+      "layer": "OA",
+      "name": "Respond to Pressure Alarm",
+      "description": "Detect, display, acknowledge, and retain a pressure alarm.",
+      "path": ["Pump Station Operations", "Capabilities", "Respond to Pressure Alarm"],
+      "parent_uuid": "10000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "10000000-0000-4000-8000-000000000112",
+      "model_id": "pump-station",
+      "type": "OperationalCapability",
+      "layer": "OA",
+      "name": "Review Event History",
+      "description": "Review retained events for operations and maintenance.",
+      "path": ["Pump Station Operations", "Capabilities", "Review Event History"],
+      "parent_uuid": "10000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "10000000-0000-4000-8000-000000000120",
+      "model_id": "pump-station",
+      "type": "OperationalActivity",
+      "layer": "OA",
+      "name": "Observe Station State",
+      "description": "Observe current state in the HMI.",
+      "path": ["Pump Station Operations", "Activities", "Observe Station State"],
+      "parent_uuid": "10000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "10000000-0000-4000-8000-000000000121",
+      "model_id": "pump-station",
+      "type": "OperationalActivity",
+      "layer": "OA",
+      "name": "Acknowledge Alarm",
+      "description": "Operator acknowledges a latched alarm.",
+      "path": ["Pump Station Operations", "Activities", "Acknowledge Alarm"],
+      "parent_uuid": "10000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "10000000-0000-4000-8000-000000000122",
+      "model_id": "pump-station",
+      "type": "OperationalActivity",
+      "layer": "OA",
+      "name": "Review Events",
+      "description": "Maintenance engineer reviews the retained event log.",
+      "path": ["Pump Station Operations", "Activities", "Review Events"],
+      "parent_uuid": "10000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000000",
+      "model_id": "pump-station",
+      "type": "SystemAnalysis",
+      "layer": "SA",
+      "name": "Pump Station Monitoring System Analysis",
+      "description": "Fixture-only system-analysis layer.",
+      "path": ["Pump Station Monitoring System Analysis"],
+      "parent_uuid": null
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000201",
+      "model_id": "pump-station",
+      "type": "System",
+      "layer": "SA",
+      "name": "Pump Station Monitoring System",
+      "description": "System under analysis.",
+      "path": ["Pump Station Monitoring System Analysis", "Pump Station Monitoring System"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000202",
+      "model_id": "pump-station",
+      "type": "SystemActor",
+      "layer": "SA",
+      "name": "Sensor Gateway",
+      "description": "Provides Modbus TCP telemetry.",
+      "path": ["Pump Station Monitoring System Analysis", "Actors", "Sensor Gateway"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000203",
+      "model_id": "pump-station",
+      "type": "SystemActor",
+      "layer": "SA",
+      "name": "Pump Controller",
+      "description": "Controls pump operation and exposes state.",
+      "path": ["Pump Station Monitoring System Analysis", "Actors", "Pump Controller"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000204",
+      "model_id": "pump-station",
+      "type": "SystemActor",
+      "layer": "SA",
+      "name": "Operator",
+      "description": "External operator at system-analysis level.",
+      "path": ["Pump Station Monitoring System Analysis", "Actors", "Operator"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000210",
+      "model_id": "pump-station",
+      "type": "SystemFunction",
+      "layer": "SA",
+      "name": "Acquire Telemetry",
+      "description": "Acquire Modbus TCP telemetry on a 500 ms cycle.",
+      "path": ["Pump Station Monitoring System Analysis", "Functions", "Acquire Telemetry"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000201"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000211",
+      "model_id": "pump-station",
+      "type": "SystemFunction",
+      "layer": "SA",
+      "name": "Validate Measurements",
+      "description": "Validate freshness and plausibility before state changes.",
+      "path": ["Pump Station Monitoring System Analysis", "Functions", "Validate Measurements"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000201"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000212",
+      "model_id": "pump-station",
+      "type": "SystemFunction",
+      "layer": "SA",
+      "name": "Determine Pump State",
+      "description": "Derive a stable pump state from validated measurements.",
+      "path": ["Pump Station Monitoring System Analysis", "Functions", "Determine Pump State"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000201"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000213",
+      "model_id": "pump-station",
+      "type": "SystemFunction",
+      "layer": "SA",
+      "name": "Evaluate Pressure Threshold",
+      "description": "Compare pressure with the configured alarm threshold.",
+      "path": ["Pump Station Monitoring System Analysis", "Functions", "Evaluate Pressure Threshold"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000201"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000214",
+      "model_id": "pump-station",
+      "type": "SystemFunction",
+      "layer": "SA",
+      "name": "Manage Alarm Lifecycle",
+      "description": "Latch, display, acknowledge, and clear alarms safely.",
+      "path": ["Pump Station Monitoring System Analysis", "Functions", "Manage Alarm Lifecycle"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000201"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000215",
+      "model_id": "pump-station",
+      "type": "SystemFunction",
+      "layer": "SA",
+      "name": "Store Event",
+      "description": "Persist UTC-stamped events for at least 30 days.",
+      "path": ["Pump Station Monitoring System Analysis", "Functions", "Store Event"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000201"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000216",
+      "model_id": "pump-station",
+      "type": "SystemFunction",
+      "layer": "SA",
+      "name": "Publish HMI State",
+      "description": "Publish pump and alarm state within the latency budget.",
+      "path": ["Pump Station Monitoring System Analysis", "Functions", "Publish HMI State"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000201"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000220",
+      "model_id": "pump-station",
+      "type": "FunctionalExchange",
+      "layer": "SA",
+      "name": "Raw Telemetry",
+      "description": "Unvalidated telemetry from the sensor gateway.",
+      "path": ["Pump Station Monitoring System Analysis", "Exchanges", "Raw Telemetry"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000221",
+      "model_id": "pump-station",
+      "type": "FunctionalExchange",
+      "layer": "SA",
+      "name": "Validated Measurement",
+      "description": "Measurement with validity and freshness information.",
+      "path": ["Pump Station Monitoring System Analysis", "Exchanges", "Validated Measurement"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000222",
+      "model_id": "pump-station",
+      "type": "FunctionalExchange",
+      "layer": "SA",
+      "name": "Pump State",
+      "description": "Derived pump operating state.",
+      "path": ["Pump Station Monitoring System Analysis", "Exchanges", "Pump State"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000223",
+      "model_id": "pump-station",
+      "type": "FunctionalExchange",
+      "layer": "SA",
+      "name": "Alarm Event",
+      "description": "Pressure or communication alarm event.",
+      "path": ["Pump Station Monitoring System Analysis", "Exchanges", "Alarm Event"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000224",
+      "model_id": "pump-station",
+      "type": "FunctionalExchange",
+      "layer": "SA",
+      "name": "Acknowledgement",
+      "description": "Operator acknowledgement command.",
+      "path": ["Pump Station Monitoring System Analysis", "Exchanges", "Acknowledgement"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000225",
+      "model_id": "pump-station",
+      "type": "FunctionalExchange",
+      "layer": "SA",
+      "name": "Event Record",
+      "description": "UTC-stamped event record for persistence.",
+      "path": ["Pump Station Monitoring System Analysis", "Exchanges", "Event Record"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000226",
+      "model_id": "pump-station",
+      "type": "FunctionalExchange",
+      "layer": "SA",
+      "name": "HMI Update",
+      "description": "Current state sent to the operator HMI.",
+      "path": ["Pump Station Monitoring System Analysis", "Exchanges", "HMI Update"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000230",
+      "model_id": "pump-station",
+      "type": "FunctionalChain",
+      "layer": "SA",
+      "name": "Pressure Alarm Handling",
+      "description": "End-to-end detection, latching, publication, and persistence chain.",
+      "path": ["Pump Station Monitoring System Analysis", "Functional Chains", "Pressure Alarm Handling"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000240",
+      "model_id": "pump-station",
+      "type": "Mission",
+      "layer": "SA",
+      "name": "Maintain Safe Pump Operation",
+      "description": "Keep operators informed and preserve alarms despite invalid data.",
+      "path": ["Pump Station Monitoring System Analysis", "Missions", "Maintain Safe Pump Operation"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "20000000-0000-4000-8000-000000000241",
+      "model_id": "pump-station",
+      "type": "Scenario",
+      "layer": "SA",
+      "name": "High Pressure Alarm Scenario",
+      "description": "Pressure rises, an alarm latches, the operator acknowledges it, and the event is stored.",
+      "path": ["Pump Station Monitoring System Analysis", "Scenarios", "High Pressure Alarm Scenario"],
+      "parent_uuid": "20000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "30000000-0000-4000-8000-000000000000",
+      "model_id": "pump-station",
+      "type": "LogicalArchitecture",
+      "layer": "LA",
+      "name": "Pump Station Logical Architecture",
+      "description": "Fixture-only logical component decomposition.",
+      "path": ["Pump Station Logical Architecture"],
+      "parent_uuid": null
+    },
+    {
+      "uuid": "30000000-0000-4000-8000-000000000310",
+      "model_id": "pump-station",
+      "type": "LogicalComponent",
+      "layer": "LA",
+      "name": "Telemetry Adapter",
+      "description": "Owns protocol polling and telemetry acquisition.",
+      "path": ["Pump Station Logical Architecture", "Telemetry Adapter"],
+      "parent_uuid": "30000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "30000000-0000-4000-8000-000000000311",
+      "model_id": "pump-station",
+      "type": "LogicalComponent",
+      "layer": "LA",
+      "name": "State Processor",
+      "description": "Validates data and derives pump state.",
+      "path": ["Pump Station Logical Architecture", "State Processor"],
+      "parent_uuid": "30000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "30000000-0000-4000-8000-000000000312",
+      "model_id": "pump-station",
+      "type": "LogicalComponent",
+      "layer": "LA",
+      "name": "Alarm Manager",
+      "description": "Evaluates thresholds and manages the alarm lifecycle.",
+      "path": ["Pump Station Logical Architecture", "Alarm Manager"],
+      "parent_uuid": "30000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "30000000-0000-4000-8000-000000000313",
+      "model_id": "pump-station",
+      "type": "LogicalComponent",
+      "layer": "LA",
+      "name": "Event Store",
+      "description": "Persists event records for the retention period.",
+      "path": ["Pump Station Logical Architecture", "Event Store"],
+      "parent_uuid": "30000000-0000-4000-8000-000000000000"
+    },
+    {
+      "uuid": "30000000-0000-4000-8000-000000000314",
+      "model_id": "pump-station",
+      "type": "LogicalComponent",
+      "layer": "LA",
+      "name": "HMI Service",
+      "description": "Publishes current state and receives acknowledgement.",
+      "path": ["Pump Station Logical Architecture", "HMI Service"],
+      "parent_uuid": "30000000-0000-4000-8000-000000000000"
+    }
+  ],
+  "relations": [
+    {"source_uuid": "10000000-0000-4000-8000-000000000101", "target_uuid": "10000000-0000-4000-8000-000000000120", "type": "performs"},
+    {"source_uuid": "10000000-0000-4000-8000-000000000101", "target_uuid": "10000000-0000-4000-8000-000000000121", "type": "performs"},
+    {"source_uuid": "10000000-0000-4000-8000-000000000102", "target_uuid": "10000000-0000-4000-8000-000000000122", "type": "performs"},
+    {"source_uuid": "10000000-0000-4000-8000-000000000110", "target_uuid": "10000000-0000-4000-8000-000000000120", "type": "involves"},
+    {"source_uuid": "10000000-0000-4000-8000-000000000111", "target_uuid": "10000000-0000-4000-8000-000000000121", "type": "involves"},
+    {"source_uuid": "10000000-0000-4000-8000-000000000112", "target_uuid": "10000000-0000-4000-8000-000000000122", "type": "involves"},
+    {"source_uuid": "10000000-0000-4000-8000-000000000110", "target_uuid": "20000000-0000-4000-8000-000000000216", "type": "realized_by"},
+    {"source_uuid": "10000000-0000-4000-8000-000000000111", "target_uuid": "20000000-0000-4000-8000-000000000230", "type": "realized_by"},
+    {"source_uuid": "10000000-0000-4000-8000-000000000112", "target_uuid": "20000000-0000-4000-8000-000000000215", "type": "realized_by"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000202", "target_uuid": "20000000-0000-4000-8000-000000000220", "type": "produces"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000220", "target_uuid": "20000000-0000-4000-8000-000000000210", "type": "consumed_by"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000210", "target_uuid": "20000000-0000-4000-8000-000000000221", "type": "produces"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000221", "target_uuid": "20000000-0000-4000-8000-000000000211", "type": "consumed_by"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000211", "target_uuid": "20000000-0000-4000-8000-000000000212", "type": "feeds"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000212", "target_uuid": "20000000-0000-4000-8000-000000000222", "type": "produces"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000221", "target_uuid": "20000000-0000-4000-8000-000000000213", "type": "consumed_by"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000213", "target_uuid": "20000000-0000-4000-8000-000000000223", "type": "produces"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000223", "target_uuid": "20000000-0000-4000-8000-000000000214", "type": "consumed_by"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000204", "target_uuid": "20000000-0000-4000-8000-000000000224", "type": "produces"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000224", "target_uuid": "20000000-0000-4000-8000-000000000214", "type": "consumed_by"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000214", "target_uuid": "20000000-0000-4000-8000-000000000225", "type": "produces"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000225", "target_uuid": "20000000-0000-4000-8000-000000000215", "type": "consumed_by"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000212", "target_uuid": "20000000-0000-4000-8000-000000000216", "type": "feeds"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000214", "target_uuid": "20000000-0000-4000-8000-000000000216", "type": "feeds"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000216", "target_uuid": "20000000-0000-4000-8000-000000000226", "type": "produces"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000226", "target_uuid": "20000000-0000-4000-8000-000000000204", "type": "consumed_by"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000230", "target_uuid": "20000000-0000-4000-8000-000000000211", "type": "involves"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000230", "target_uuid": "20000000-0000-4000-8000-000000000213", "type": "involves"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000230", "target_uuid": "20000000-0000-4000-8000-000000000214", "type": "involves"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000230", "target_uuid": "20000000-0000-4000-8000-000000000215", "type": "involves"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000230", "target_uuid": "20000000-0000-4000-8000-000000000216", "type": "involves"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000240", "target_uuid": "10000000-0000-4000-8000-000000000110", "type": "supports"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000240", "target_uuid": "10000000-0000-4000-8000-000000000111", "type": "supports"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000241", "target_uuid": "20000000-0000-4000-8000-000000000230", "type": "executes"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000210", "target_uuid": "30000000-0000-4000-8000-000000000310", "type": "allocated_to"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000211", "target_uuid": "30000000-0000-4000-8000-000000000311", "type": "allocated_to"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000212", "target_uuid": "30000000-0000-4000-8000-000000000311", "type": "allocated_to"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000213", "target_uuid": "30000000-0000-4000-8000-000000000312", "type": "allocated_to"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000214", "target_uuid": "30000000-0000-4000-8000-000000000312", "type": "allocated_to"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000215", "target_uuid": "30000000-0000-4000-8000-000000000313", "type": "allocated_to"},
+    {"source_uuid": "20000000-0000-4000-8000-000000000216", "target_uuid": "30000000-0000-4000-8000-000000000314", "type": "allocated_to"}
+  ],
+  "diagrams": [
+    {
+      "uuid": "90000000-0000-4000-8000-000000000001",
+      "name": "[FIXTURE] Operational Capabilities",
+      "type": "Operational Architecture Blank",
+      "description": "Synthetic diagram for CI and UI development; not a Capella render.",
+      "represented_element_uuids": [
+        "10000000-0000-4000-8000-000000000101",
+        "10000000-0000-4000-8000-000000000102",
+        "10000000-0000-4000-8000-000000000110",
+        "10000000-0000-4000-8000-000000000111",
+        "10000000-0000-4000-8000-000000000112"
+      ],
+      "svg_available": true,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 900 360\" role=\"img\" aria-label=\"Fixture operational capabilities\"><rect width=\"900\" height=\"360\" fill=\"#f8fafc\"/><text x=\"32\" y=\"42\" font-family=\"sans-serif\" font-size=\"20\" fill=\"#0f172a\">FIXTURE · Operational capabilities</text><rect x=\"32\" y=\"90\" width=\"190\" height=\"72\" rx=\"10\" fill=\"#e0f2fe\" stroke=\"#0369a1\"/><text x=\"58\" y=\"132\" font-family=\"sans-serif\" font-size=\"16\" fill=\"#0c4a6e\">Operator</text><rect x=\"300\" y=\"70\" width=\"250\" height=\"64\" rx=\"32\" fill=\"#ecfeff\" stroke=\"#0891b2\"/><text x=\"340\" y=\"108\" font-family=\"sans-serif\" font-size=\"15\" fill=\"#164e63\">Monitor Pump Station</text><rect x=\"300\" y=\"155\" width=\"250\" height=\"64\" rx=\"32\" fill=\"#fff7ed\" stroke=\"#ea580c\"/><text x=\"327\" y=\"193\" font-family=\"sans-serif\" font-size=\"15\" fill=\"#7c2d12\">Respond to Pressure Alarm</text><rect x=\"300\" y=\"240\" width=\"250\" height=\"64\" rx=\"32\" fill=\"#f0fdf4\" stroke=\"#16a34a\"/><text x=\"347\" y=\"278\" font-family=\"sans-serif\" font-size=\"15\" fill=\"#14532d\">Review Event History</text><rect x=\"640\" y=\"200\" width=\"220\" height=\"72\" rx=\"10\" fill=\"#ede9fe\" stroke=\"#7c3aed\"/><text x=\"672\" y=\"242\" font-family=\"sans-serif\" font-size=\"15\" fill=\"#4c1d95\">Maintenance Engineer</text><path d=\"M222 126 L300 102 M222 126 L300 187 M640 236 L550 272\" stroke=\"#64748b\" stroke-width=\"2\" fill=\"none\"/></svg>"
+    },
+    {
+      "uuid": "90000000-0000-4000-8000-000000000002",
+      "name": "[FIXTURE] System Functional Flow",
+      "type": "System Data Flow Blank",
+      "description": "Synthetic diagram for CI and UI development; not a Capella render.",
+      "represented_element_uuids": [
+        "20000000-0000-4000-8000-000000000210",
+        "20000000-0000-4000-8000-000000000211",
+        "20000000-0000-4000-8000-000000000212",
+        "20000000-0000-4000-8000-000000000213",
+        "20000000-0000-4000-8000-000000000214",
+        "20000000-0000-4000-8000-000000000215",
+        "20000000-0000-4000-8000-000000000216",
+        "20000000-0000-4000-8000-000000000230"
+      ],
+      "svg_available": true,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1100 440\" role=\"img\" aria-label=\"Fixture system functional flow\"><defs><marker id=\"arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#475569\"/></marker></defs><rect width=\"1100\" height=\"440\" fill=\"#f8fafc\"/><text x=\"28\" y=\"38\" font-family=\"sans-serif\" font-size=\"20\" fill=\"#0f172a\">FIXTURE · Pressure Alarm Handling</text><g fill=\"#ecfeff\" stroke=\"#0891b2\"><rect x=\"30\" y=\"100\" width=\"180\" height=\"70\" rx=\"8\"/><rect x=\"260\" y=\"100\" width=\"180\" height=\"70\" rx=\"8\"/><rect x=\"490\" y=\"100\" width=\"180\" height=\"70\" rx=\"8\"/><rect x=\"720\" y=\"100\" width=\"180\" height=\"70\" rx=\"8\"/><rect x=\"490\" y=\"270\" width=\"180\" height=\"70\" rx=\"8\"/><rect x=\"720\" y=\"270\" width=\"180\" height=\"70\" rx=\"8\"/><rect x=\"930\" y=\"185\" width=\"145\" height=\"70\" rx=\"8\"/></g><g font-family=\"sans-serif\" font-size=\"14\" text-anchor=\"middle\" fill=\"#164e63\"><text x=\"120\" y=\"140\">Acquire Telemetry</text><text x=\"350\" y=\"140\">Validate Measurements</text><text x=\"580\" y=\"140\">Determine Pump State</text><text x=\"810\" y=\"140\">Publish HMI State</text><text x=\"580\" y=\"310\">Evaluate Threshold</text><text x=\"810\" y=\"310\">Manage Alarm</text><text x=\"1002\" y=\"225\">Store Event</text></g><g stroke=\"#475569\" stroke-width=\"2\" marker-end=\"url(#arrow)\"><path d=\"M210 135 L260 135\"/><path d=\"M440 135 L490 135\"/><path d=\"M670 135 L720 135\"/><path d=\"M350 170 L535 270\"/><path d=\"M670 305 L720 305\"/><path d=\"M900 305 L950 255\"/><path d=\"M900 305 L850 170\"/></g></svg>"
+    },
+    {
+      "uuid": "90000000-0000-4000-8000-000000000003",
+      "name": "[FIXTURE] Logical Allocations",
+      "type": "Logical Architecture Blank",
+      "description": "Synthetic diagram for CI and UI development; not a Capella render.",
+      "represented_element_uuids": [
+        "30000000-0000-4000-8000-000000000310",
+        "30000000-0000-4000-8000-000000000311",
+        "30000000-0000-4000-8000-000000000312",
+        "30000000-0000-4000-8000-000000000313",
+        "30000000-0000-4000-8000-000000000314"
+      ],
+      "svg_available": true,
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 330\" role=\"img\" aria-label=\"Fixture logical allocations\"><rect width=\"1000\" height=\"330\" fill=\"#f8fafc\"/><text x=\"28\" y=\"40\" font-family=\"sans-serif\" font-size=\"20\" fill=\"#0f172a\">FIXTURE · Logical components</text><g stroke=\"#0f766e\" fill=\"#f0fdfa\"><rect x=\"28\" y=\"105\" width=\"160\" height=\"100\" rx=\"10\"/><rect x=\"222\" y=\"105\" width=\"160\" height=\"100\" rx=\"10\"/><rect x=\"416\" y=\"105\" width=\"160\" height=\"100\" rx=\"10\"/><rect x=\"610\" y=\"105\" width=\"160\" height=\"100\" rx=\"10\"/><rect x=\"804\" y=\"105\" width=\"160\" height=\"100\" rx=\"10\"/></g><g font-family=\"sans-serif\" font-size=\"14\" text-anchor=\"middle\" fill=\"#134e4a\"><text x=\"108\" y=\"160\">Telemetry Adapter</text><text x=\"302\" y=\"160\">State Processor</text><text x=\"496\" y=\"160\">Alarm Manager</text><text x=\"690\" y=\"160\">Event Store</text><text x=\"884\" y=\"160\">HMI Service</text></g><path d=\"M188 155 L222 155 M382 155 L416 155 M576 155 L610 155 M770 155 L804 155\" stroke=\"#64748b\" stroke-width=\"3\" fill=\"none\"/></svg>"
+    }
+  ]
+}

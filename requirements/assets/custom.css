@@ -1,0 +1,15 @@
+:root {
+  --reqpilot-accent: #155e75;
+}
+
+body {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+sdoc-node[data-node-type="REQUIREMENT"] {
+  border-inline-start: 0.2rem solid var(--reqpilot-accent);
+}
+
+.sdoc-table_key {
+  color: var(--reqpilot-accent);
+}
