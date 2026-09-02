@@ -80,6 +80,22 @@ test('fixture: edit → link → graph → matrix → combined HTML', async ({ p
       page.locator(`[data-testid^="matrix-cell-${requirementUid}-"][aria-label*="satisfied_by"]`),
     ).toBeVisible();
 
+    await page.getByRole('link', { name: 'Архитектура' }).click();
+    await page.getByRole('button', { name: `${targetName} SystemFunction` }).click();
+    await page
+      .getByRole('button', { name: '[FIXTURE] System Functional Flow System Data Flow Blank' })
+      .click();
+    await expect(page.getByRole('img', { name: '[FIXTURE] System Functional Flow' })).toBeVisible();
+    const actualSize = page.getByRole('button', {
+      name: 'Показать диаграмму в исходном размере',
+    });
+    const fitDiagram = page.getByRole('button', { name: 'Вписать диаграмму' });
+    await expect(fitDiagram).toHaveAttribute('aria-pressed', 'true');
+    await actualSize.click();
+    await expect(actualSize).toHaveAttribute('aria-pressed', 'true');
+    await fitDiagram.click();
+    await expect(fitDiagram).toHaveAttribute('aria-pressed', 'true');
+
     await page.getByRole('link', { name: 'Экспорт' }).click();
     await page.getByTestId('export-combined-html').click();
     const jobs = page.getByTestId('export-jobs');

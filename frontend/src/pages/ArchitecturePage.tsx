@@ -1,5 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { Box, ChevronRight, Copy, FileImage, Focus, Layers3, Search } from 'lucide-react';
+import {
+  Box,
+  ChevronRight,
+  Copy,
+  FileImage,
+  Focus,
+  Layers3,
+  Maximize2,
+  Search,
+} from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
@@ -8,6 +17,39 @@ import { cn, copyText } from '../lib/utils';
 import { EmptyState, ErrorState, LoadingState } from '../components/PageState';
 import { SectionHeader } from '../components/SectionHeader';
 import { StatusBadge } from '../components/StatusBadge';
+
+type SvgPresentation = {
+  width: number;
+  height: number | undefined;
+  labels: string[];
+};
+
+function inspectSvg(svgMarkup: string | undefined): SvgPresentation {
+  const fallback = { width: 900, height: undefined, labels: [] };
+  if (!svgMarkup || typeof DOMParser === 'undefined') return fallback;
+  const document = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
+  if (document.querySelector('parsererror')) return fallback;
+  const root = document.documentElement;
+  const viewBox = root.getAttribute('viewBox')?.trim().split(/\s+/).map(Number);
+  const parseLength = (value: string | null) => {
+    const parsed = Number.parseFloat(value ?? '');
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
+  };
+  const width = parseLength(root.getAttribute('width')) ?? viewBox?.[2] ?? fallback.width;
+  const height = parseLength(root.getAttribute('height')) ?? viewBox?.[3];
+  const labels = [
+    ...new Set(
+      [...document.querySelectorAll('text')]
+        .map((node) => node.textContent?.trim() ?? '')
+        .filter(Boolean),
+    ),
+  ];
+  return {
+    width: Number.isFinite(width) && width > 0 ? width : fallback.width,
+    height: height && Number.isFinite(height) && height > 0 ? height : undefined,
+    labels,
+  };
+}
 
 export function ArchitecturePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -61,6 +103,18 @@ export function ArchitecturePage() {
       [];
     return matching.length ? matching : (diagrams.data ?? []);
   }, [diagrams.data, selectedUuid]);
+  const selectedDiagramInfo = useMemo(
+    () => diagrams.data?.find((diagram) => diagram.uuid === selectedDiagram),
+    [diagrams.data, selectedDiagram],
+  );
+  const svgPresentation = useMemo(() => inspectSvg(svg.data), [svg.data]);
+  const diagramDescription = useMemo(() => {
+    if (!selectedDiagramInfo) return 'Диаграмма Capella.';
+    const labels = svgPresentation.labels.length
+      ? ` Подписи: ${svgPresentation.labels.join(', ')}.`
+      : '';
+    return `${selectedDiagramInfo.name}. Тип: ${selectedDiagramInfo.type}.${labels}`;
+  }, [selectedDiagramInfo, svgPresentation.labels]);
   const linkedRequirementUids = useMemo(
     () => [
       ...new Set([
@@ -347,28 +401,50 @@ export function ArchitecturePage() {
                 {svg.data ? (
                   <div className="h-full w-full overflow-auto bg-white p-3">
                     <img
-                      alt="Диаграмма Capella"
+                      alt={selectedDiagramInfo?.name ?? 'Диаграмма Capella'}
+                      aria-describedby="capella-diagram-description"
                       className={cn(
                         'block transition-none',
-                        diagramFitted
-                          ? 'h-full w-full object-contain'
-                          : 'h-auto min-w-full max-w-none',
+                        diagramFitted ? 'h-full w-full object-contain' : 'h-auto w-auto max-w-none',
                       )}
                       src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg.data)}`}
+                      style={
+                        diagramFitted
+                          ? undefined
+                          : {
+                              width: svgPresentation.width,
+                              height: svgPresentation.height,
+                            }
+                      }
                     />
+                    <p className="sr-only" id="capella-diagram-description">
+                      {diagramDescription}
+                    </p>
                   </div>
                 ) : null}
                 {svg.data ? (
-                  <button
-                    className="icon-button absolute right-3 top-3"
-                    type="button"
-                    aria-label="Вписать диаграмму"
-                    aria-pressed={diagramFitted}
-                    title="Вписать"
-                    onClick={() => setDiagramFitted(true)}
-                  >
-                    <Focus aria-hidden="true" className="h-4 w-4" />
-                  </button>
+                  <div className="absolute right-3 top-3 flex gap-1 rounded-md bg-white/90 p-1 shadow-sm">
+                    <button
+                      className="icon-button"
+                      type="button"
+                      aria-label="Показать диаграмму в исходном размере"
+                      aria-pressed={!diagramFitted}
+                      title="Исходный размер"
+                      onClick={() => setDiagramFitted(false)}
+                    >
+                      <Maximize2 aria-hidden="true" className="h-4 w-4" />
+                    </button>
+                    <button
+                      className="icon-button"
+                      type="button"
+                      aria-label="Вписать диаграмму"
+                      aria-pressed={diagramFitted}
+                      title="Вписать"
+                      onClick={() => setDiagramFitted(true)}
+                    >
+                      <Focus aria-hidden="true" className="h-4 w-4" />
+                    </button>
+                  </div>
                 ) : null}
               </div>
             </div>
