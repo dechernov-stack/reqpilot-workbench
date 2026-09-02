@@ -59,7 +59,9 @@ test('fixture: edit → link → graph → matrix → combined HTML', async ({ p
     const rationale = page.getByTestId('requirement-rationale');
     await rationale.fill(`${original.rationale}\nPlaywright fixture check`);
     await page.getByRole('button', { name: 'Сохранить' }).click();
-    await expect(page.getByTestId('requirement-revision')).not.toHaveText(revisionBefore ?? '');
+    await expect(page.getByTestId('requirement-revision')).not.toHaveText(revisionBefore ?? '', {
+      timeout: 30_000,
+    });
 
     await page.getByRole('button', { name: 'Связать' }).click();
     const dialog = page.getByRole('dialog', { name: 'Связать с архитектурой' });

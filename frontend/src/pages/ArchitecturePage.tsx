@@ -16,6 +16,7 @@ export function ArchitecturePage() {
   const [layer, setLayer] = useState('');
   const [selectedUuid, setSelectedUuid] = useState(searchParams.get('uuid') ?? '');
   const [selectedDiagram, setSelectedDiagram] = useState('');
+  const [diagramFitted, setDiagramFitted] = useState(true);
   const [copied, setCopied] = useState(false);
   const status = useQuery({ queryKey: ['capella-status'], queryFn: api.capellaStatus });
   const elements = useQuery({
@@ -327,7 +328,10 @@ export function ArchitecturePage() {
                       selectedDiagram === diagram.uuid && 'bg-cyan-50 ring-1 ring-inset ring-cyan',
                     )}
                     type="button"
-                    onClick={() => setSelectedDiagram(diagram.uuid)}
+                    onClick={() => {
+                      setSelectedDiagram(diagram.uuid);
+                      setDiagramFitted(true);
+                    }}
                   >
                     <span className="block font-semibold">{diagram.name}</span>
                     <span className="mt-1 block text-[10px] text-steel">{diagram.type}</span>
@@ -341,19 +345,27 @@ export function ArchitecturePage() {
                   <ErrorState error={svg.error} onRetry={() => void svg.refetch()} />
                 ) : null}
                 {svg.data ? (
-                  <iframe
-                    title="Диаграмма Capella"
-                    className="h-full w-full border-0 bg-white"
-                    sandbox=""
-                    srcDoc={`<!doctype html><meta charset="utf-8"><style>html,body{margin:0;height:100%;display:grid;place-items:center;background:#fff}svg{max-width:100%;max-height:100%;height:auto}</style>${svg.data}`}
-                  />
+                  <div className="h-full w-full overflow-auto bg-white p-3">
+                    <img
+                      alt="Диаграмма Capella"
+                      className={cn(
+                        'block transition-none',
+                        diagramFitted
+                          ? 'h-full w-full object-contain'
+                          : 'h-auto min-w-full max-w-none',
+                      )}
+                      src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg.data)}`}
+                    />
+                  </div>
                 ) : null}
                 {svg.data ? (
                   <button
                     className="icon-button absolute right-3 top-3"
                     type="button"
                     aria-label="Вписать диаграмму"
+                    aria-pressed={diagramFitted}
                     title="Вписать"
+                    onClick={() => setDiagramFitted(true)}
                   >
                     <Focus aria-hidden="true" className="h-4 w-4" />
                   </button>
